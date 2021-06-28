@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar } from 'react
 
 //components
 import CurrentPrice from './src/components/CurrentPrice/CurrentPrice'
+import HistoryGraphic from './src/components/HistoryGraphic/HistoryGraphic'
+import QuotationList from './src/components/QuotationList/QuotationList';
 
 export default function App() {
   return (
@@ -10,6 +12,8 @@ export default function App() {
       <Text>Open up App.js to start working on your app!</Text>
       <StatusBar backgroundColor="#f50d41" barStyle="light-content" />
       <CurrentPrice />
+      <HistoryGraphic />
+      <QuotationList />
     </SafeAreaView>
   );
 }
