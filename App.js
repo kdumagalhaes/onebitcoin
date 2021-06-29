@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
 
 //components
@@ -25,7 +25,51 @@ const url = qtdDays => {
   return `https://api.coindesk.com/v1/bpi/historical/close.json?start=${start_date}&end=${end_date}`
 }
 
+const getListCoins = async url => {
+  let response = await fetch(url)
+  let returnApi = await response.json()
+  let selectListQuotations = returnApi.bpi
+  const queryCoinsList = Object.keys(selectListQuotations).map(key => {
+    return {
+      data: key.split("-").reverse().join("/"),
+      valor: selectListQuotations[key]
+    }
+  })
+
+  let data = queryCoinsList.reverse()
+  return data
+}
+
+const getPriceCoinsGraphic = async url => {
+  let responseG = await fetch(url)
+  let returnApiG = await responseG.json()
+  let selectListQuotationsG = returnApiG.bpi
+  const queryCoinsList = Object.keys(selectListQuotationsG).map(key => {
+    dselectListQuotations[key]
+  })
+
+  let dataG = queryCoinsList
+  return dataG
+}
+
 const App = () => {
+
+  const [coinsList, setCoinsList] = useState([])
+  const [coinsGraphicList, setCoinsGraphicList] = useState([0])
+  const [days, setDays] = useState(30)
+  const [updateDate, setUpdateDate] = useState(true)
+
+  const updateDay = number => {
+    setDays(number)
+    setUpdateDate(true)
+  }
+
+  useEffect(() => {
+    getListCoins(url(days)).then(data => setCoinsList(data))
+    getPriceCoinsGraphic(url(days)).then(dataG => setCoinsGraphicList(dataG))
+  }, [updateDate])
+
+
   return (
     <SafeAreaView style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
