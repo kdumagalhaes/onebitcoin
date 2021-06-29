@@ -59,9 +59,6 @@ const QuotationList = () => {
                     </Text>
                 </TouchableOpacity>
             </View>
-            <ScrollView>
-
-            </ScrollView>
         </Fragment>
     )
 }
