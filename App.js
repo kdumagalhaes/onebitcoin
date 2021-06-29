@@ -4,7 +4,8 @@ import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar } from 'react
 //components
 import CurrentPrice from './src/components/CurrentPrice/CurrentPrice'
 import HistoryGraphic from './src/components/HistoryGraphic/HistoryGraphic'
-import QuotationList from './src/components/QuotationList/QuotationList';
+import QuotationList from './src/components/QuotationList/QuotationList'
+import QuotationItems from './src/components/QuotationList/QuotationItems/QuotationItems'
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
       <CurrentPrice />
       <HistoryGraphic />
       <QuotationList />
+      <QuotationItems />
     </SafeAreaView>
   );
 }
