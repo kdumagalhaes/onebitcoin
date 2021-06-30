@@ -1,16 +1,22 @@
 import React, { Fragment } from 'react'
-import { ScrollView, View, Text, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Text, TouchableOpacity, FlatList } from 'react-native'
 
 //styles
 import styles from './styles'
 
-const QuotationList = () => {
+//components
+import QuotationItems from './QuotationItems/QuotationItems'
+
+const QuotationList = ({filterDay, listTransactions}) => {
+
+    const daysQuery = filterDay
+
     return (
         <Fragment>
             <View style={styles.filters}>
                 <TouchableOpacity
                     style={styles.buttonQuery}
-                    onPress={() => { }}
+                    onPress={() => daysQuery(7)}
                 >
                     <Text
                         style={styles.textButtonQuery}
@@ -20,7 +26,7 @@ const QuotationList = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.buttonQuery}
-                    onPress={() => { }}
+                    onPress={() => daysQuery(15)}
                 >
                     <Text
                         style={styles.textButtonQuery}
@@ -30,7 +36,7 @@ const QuotationList = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.buttonQuery}
-                    onPress={() => { }}
+                    onPress={() => daysQuery(30)}
                 >
                     <Text
                         style={styles.textButtonQuery}
@@ -40,7 +46,7 @@ const QuotationList = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.buttonQuery}
-                    onPress={() => { }}
+                    onPress={() => daysQuery(90)}
                 >
                     <Text
                         style={styles.textButtonQuery}
@@ -50,7 +56,7 @@ const QuotationList = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.buttonQuery}
-                    onPress={() => { }}
+                    onPress={() => daysQuery(180)}
                 >
                     <Text
                         style={styles.textButtonQuery}
@@ -59,6 +65,12 @@ const QuotationList = () => {
                     </Text>
                 </TouchableOpacity>
             </View>
+            <ScrollView>
+                <FlatList 
+                data={listTransactions}
+                renderItem={({item}) => <QuotationItems valor={item.valor} data={item.data} />}
+                />
+            </ScrollView>
         </Fragment>
     )
 }

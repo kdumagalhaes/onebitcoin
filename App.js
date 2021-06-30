@@ -5,25 +5,26 @@ import { StyleSheet, Text, SafeAreaView, Platform, StatusBar } from 'react-nativ
 import CurrentPrice from './src/components/CurrentPrice/CurrentPrice'
 import HistoryGraphic from './src/components/HistoryGraphic/HistoryGraphic'
 import QuotationList from './src/components/QuotationList/QuotationList'
-import QuotationItems from './src/components/QuotationList/QuotationItems/QuotationItems'
 
 const addZero = number => {
   if (number <= 9) {
     return '0' + number
-  } else {
-    return number
-  }
+  } 
+
+  return number
 }
 
 const url = qtdDays => {
   const date = new Date()
+  
   const listLastDays = qtdDays
-  const end_date = `${date.getFullYear()} - ${addZero(date.getMonth() + 1)} - ${addZero(date.getDay())}}`
+  const end_date = `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(date.getDate())}`
   date.setDate(date.getDate() - listLastDays)
-  const start_date = `${date.getFullYear()} - ${addZero(date.getMonth() + 1)} - ${addZero(date.getDay())}}`
+  const start_date = `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(date.getDate())}`
 
   return `https://api.coindesk.com/v1/bpi/historical/close.json?start=${start_date}&end=${end_date}`
 }
+
 
 const getListCoins = async url => {
   let response = await fetch(url)
@@ -44,11 +45,11 @@ const getPriceCoinsGraphic = async url => {
   let responseG = await fetch(url)
   let returnApiG = await responseG.json()
   let selectListQuotationsG = returnApiG.bpi
-  const queryCoinsList = Object.keys(selectListQuotationsG).map(key => {
-    dselectListQuotations[key]
+  const queryCoinsListG = Object.keys(selectListQuotationsG).map(key => {
+    return selectListQuotationsG[key]
   })
 
-  let dataG = queryCoinsList
+  let dataG = queryCoinsListG
   return dataG
 }
 
@@ -56,18 +57,22 @@ const App = () => {
 
   const [coinsList, setCoinsList] = useState([])
   const [coinsGraphicList, setCoinsGraphicList] = useState([0])
-  const [days, setDays] = useState(30)
-  const [updateDate, setUpdateDate] = useState(true)
+  const [days, setDays] = useState(2)
+  const [updateData, setupdateData] = useState(true)
 
   const updateDay = number => {
     setDays(number)
-    setUpdateDate(true)
+    setupdateData(true)
   }
 
   useEffect(() => {
     getListCoins(url(days)).then(data => setCoinsList(data))
     getPriceCoinsGraphic(url(days)).then(dataG => setCoinsGraphicList(dataG))
-  }, [updateDate])
+
+    if (updateData) {
+      setupdateData(false)
+    }
+  }, [updateData])
 
 
   return (
@@ -76,8 +81,7 @@ const App = () => {
       <StatusBar backgroundColor="#f50d41" barStyle="light-content" />
       <CurrentPrice />
       <HistoryGraphic />
-      <QuotationList />
-      <QuotationItems />
+      <QuotationList filterDay={updateDay} listTransactions={coinsList} />
     </SafeAreaView>
   );
 }
