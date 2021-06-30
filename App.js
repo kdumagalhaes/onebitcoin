@@ -57,7 +57,7 @@ const App = () => {
 
   const [coinsList, setCoinsList] = useState([])
   const [coinsGraphicList, setCoinsGraphicList] = useState([0])
-  const [days, setDays] = useState(2)
+  const [days, setDays] = useState(30)
   const [updateData, setupdateData] = useState(true)
 
   const updateDay = number => {
@@ -80,7 +80,7 @@ const App = () => {
       <Text>Open up App.js to start working on your app!</Text>
       <StatusBar backgroundColor="#f50d41" barStyle="light-content" />
       <CurrentPrice />
-      <HistoryGraphic />
+      <HistoryGraphic infoDataGraphic={coinsGraphicList} />
       <QuotationList filterDay={updateDay} listTransactions={coinsList} />
     </SafeAreaView>
   );
