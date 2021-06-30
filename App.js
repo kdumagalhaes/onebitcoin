@@ -59,15 +59,22 @@ const App = () => {
   const [coinsGraphicList, setCoinsGraphicList] = useState([0])
   const [days, setDays] = useState(30)
   const [updateData, setupdateData] = useState(true)
+  const [price, setPrice] = useState()
 
   const updateDay = number => {
     setDays(number)
     setupdateData(true)
   }
 
+  const priceCotation = () => {
+    setPrice(coinsGraphicList.pop())
+  
+  }
+
   useEffect(() => {
     getListCoins(url(days)).then(data => setCoinsList(data))
     getPriceCoinsGraphic(url(days)).then(dataG => setCoinsGraphicList(dataG))
+    priceCotation()
 
     if (updateData) {
       setupdateData(false)
@@ -79,7 +86,7 @@ const App = () => {
     <SafeAreaView style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
       <StatusBar backgroundColor="#f50d41" barStyle="light-content" />
-      <CurrentPrice />
+      <CurrentPrice lastCotation={price} />
       <HistoryGraphic infoDataGraphic={coinsGraphicList} />
       <QuotationList filterDay={updateDay} listTransactions={coinsList} />
     </SafeAreaView>
